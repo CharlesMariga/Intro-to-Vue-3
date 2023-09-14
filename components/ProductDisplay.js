@@ -37,6 +37,8 @@ app.component("product-display", {
             </button>
           </div>
         </div>
+        <review-list v-if="reviews.length" :reviews="reviews"></review-list>
+        <review-form @review-submitted="addReview"></review-form>
       </div>`,
 
   data() {
@@ -60,14 +62,18 @@ app.component("product-display", {
           quantity: 0,
         },
       ],
+      reviews: [],
     };
   },
   methods: {
     addToCart() {
-      this.$emit("add-to-cart", this.variants[this.selectedVariant].id)
+      this.$emit("add-to-cart", this.variants[this.selectedVariant].id);
     },
     updateVariant(index) {
       this.selectedVariant = index;
+    },
+    addReview(productReview) {
+      this.reviews.push(productReview);
     },
   },
   computed: {
@@ -85,6 +91,6 @@ app.component("product-display", {
         return "Free";
       }
       return 2.99;
-    }
+    },
   },
 });
